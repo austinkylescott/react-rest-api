@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import logo from "./logo.svg";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import withContext from "./Context";
+import "./App.css";
+
+//Import Components
+import Header from "./components/Header";
+import Courses from "./components/Courses";
+
+//Give components Context
+const HeaderWithContext = withContext(Header);
+const CoursesWithContext = withContext(Courses);
+
+export default () => (
+  <Router>
+    <HeaderWithContext />
+    <div>
+      <Switch>
+        <Route exact path="/" component={CoursesWithContext} />
+        <Route path="/courses/create" component={CoursesWithContext} />
+        <Route path="/courses/:id/update" component={CoursesWithContext} />
+        <Route path="/courses/:id" component={CoursesWithContext} />
+        <Route path="/signin" component={CoursesWithContext} />
+        <Route path="/signup" component={CoursesWithContext} />
+        <Route path="/signout" component={CoursesWithContext} />
+      </Switch>
     </div>
-  );
-}
-
-export default App;
+  </Router>
+);
