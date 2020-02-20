@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import NewCourseButton from "./NewCourseButton";
 
 export default class Courses extends Component {
   componentDidMount() {
@@ -18,7 +19,10 @@ export default class Courses extends Component {
           this.state.courses.map(course => {
             return (
               <div className="grid-33" key={course.id}>
-                <Link className="course--module course--link" to="/">
+                <Link
+                  className="course--module course--link"
+                  to={"/courses/" + course.id}
+                >
                   <h4 className="course--label">Course</h4>
                   <h3 className="course--title">{course.title}</h3>
                 </Link>
@@ -26,6 +30,7 @@ export default class Courses extends Component {
             );
           })
         )}
+        <NewCourseButton />
       </div>
     );
   }
