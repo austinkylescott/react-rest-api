@@ -59,7 +59,6 @@ export default class UserSignIn extends Component {
     const value = event.target.value;
 
     this.setState(() => {
-      console.log(`${name} ${value}`);
       return {
         [name]: value
       };
@@ -69,7 +68,7 @@ export default class UserSignIn extends Component {
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || {
-      from: { pathname: "/authenticated" }
+      from: { pathname: "/" }
     };
     const { username, password } = this.state;
 
