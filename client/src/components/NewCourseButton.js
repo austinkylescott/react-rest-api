@@ -16,7 +16,7 @@ export default class NewCourseButton extends Component {
               x="0px"
               y="0px"
               viewBox="0 0 13 13"
-              class="add"
+              className="add"
             >
               <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
             </svg>
