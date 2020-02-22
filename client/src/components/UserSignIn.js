@@ -26,7 +26,7 @@ export default class UserSignIn extends Component {
               <React.Fragment>
                 <input
                   id="emailAddress"
-                  name="emailAddress"
+                  name="username"
                   type="email"
                   placeholder="Email Address"
                   value={username}
