@@ -4,12 +4,14 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import logo from "./logo.svg";
 
 import withContext from "./Context";
-//import "./App.css";
+import PrivateRoute from "./PrivateRoute";
 
 //Import Components
+
 import Header from "./components/Header";
 import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
+import UpdateCourse from "./components/UpdateCourse";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
@@ -18,6 +20,7 @@ import UserSignOut from "./components/UserSignOut";
 const HeaderWithContext = withContext(Header);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
+const UpdateCourseWithContext = withContext(UpdateCourse);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
@@ -28,8 +31,11 @@ export default () => (
     <div>
       <Switch>
         <Route exact path="/" component={CoursesWithContext} />
-        <Route path="/courses/create" component={CoursesWithContext} />
-        <Route path="/courses/:id/update" component={CoursesWithContext} />
+        <PrivateRoute path="/courses/create" component={CoursesWithContext} />
+        <PrivateRoute
+          path="/courses/:id/update"
+          component={UpdateCourseWithContext}
+        />
         <Route
           exact
           path="/courses/:id"
