@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import NewCourseButton from "./NewCourseButton";
 
 export default class Courses extends Component {
+  state = {
+    courses: null
+  };
+
   componentDidMount() {
     const { context } = this.props;
     context.data.getCourses().then(courses => {
@@ -11,12 +15,14 @@ export default class Courses extends Component {
   }
 
   render() {
+    const { courses } = this.state;
+
     return (
       <div className="bounds">
-        {this.state === null ? (
+        {courses === null ? (
           <h1>Loading...</h1>
         ) : (
-          this.state.courses.map(course => {
+          courses.map(course => {
             return (
               <div className="grid-33" key={course.id}>
                 <Link

@@ -4,9 +4,7 @@ import { Link } from "react-router-dom";
 export default class CourseDetail extends Component {
   state = {
     id: this.props.match.params.id,
-    course: {
-      User: {}
-    },
+    course: null,
     errors: []
   };
 
@@ -23,10 +21,10 @@ export default class CourseDetail extends Component {
 
   render() {
     const { id, course, errors } = this.state;
-    console.log(errors);
+
     return (
       <div>
-        {this.state === null ? (
+        {course === null ? (
           <h1>Loading...</h1>
         ) : (
           <div>

@@ -55,6 +55,18 @@ export default class Data {
     }
   }
 
+  async updateCourse(course, username, password) {
+    const response = await this.api(
+      `/courses/${course.id}`,
+      "PUT",
+      course,
+      true,
+      { username, password }
+    );
+
+    //TODO complete update course
+  }
+
   async getUser(username, password) {
     const response = await this.api(`/users`, "GET", null, true, {
       username,
