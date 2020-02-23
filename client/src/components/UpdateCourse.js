@@ -9,10 +9,11 @@ export default class UpdateCourse extends Component {
 
   componentDidMount() {
     const { context } = this.props;
-    console.log(this.state);
+
     context.data.getCourse(this.state.id).then(course => {
       this.setState(course);
     });
+    console.log(this.state);
   }
 
   render() {

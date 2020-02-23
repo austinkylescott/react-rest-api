@@ -31,6 +31,7 @@ export default () => (
     <div>
       <Switch>
         <Route exact path="/" component={CoursesWithContext} />
+        <Route exact path="/courses" component={CoursesWithContext} />
         <PrivateRoute path="/courses/create" component={CoursesWithContext} />
         <PrivateRoute
           path="/courses/:id/update"
@@ -39,12 +40,7 @@ export default () => (
         <Route
           exact
           path="/courses/:id"
-          render={props => (
-            <CourseDetailWithContext
-              {...props}
-              courseID={props.match.params.id}
-            />
-          )}
+          render={props => <CourseDetailWithContext {...props} />}
         />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
