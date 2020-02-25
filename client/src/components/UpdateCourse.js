@@ -134,7 +134,6 @@ export default class UpdateCourse extends Component {
     const value = event.target.value;
 
     this.setState(() => {
-      console.log(`[${name}]: ${value}`);
       return {
         [name]: value
       };
@@ -144,6 +143,54 @@ export default class UpdateCourse extends Component {
   submit = () => {
     // TODO complete submit
     const { context } = this.props;
+    const {
+      id,
+      title,
+      firstName,
+      lastName,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId,
+      errors
+    } = this.state;
+
+    const course = {
+      id,
+      title,
+      firstName,
+      lastName,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId
+    };
+
+    const { authenticatedUser } = context;
+    console.log(authenticatedUser);
+
+    context.data
+      .updateCourse(
+        course,
+        authenticatedUser.username,
+        authenticatedUser.password
+      )
+      .then(errors => {
+        if (errors.length) {
+          //If any errors were returned, update component error state
+          this.setState({ errors });
+        } else {
+          context.actions
+            .signIn(authenticatedUser.username, authenticatedUser.password)
+            .then(() => {
+              this.props.history.push(`/courses/${course.id}`);
+            });
+        }
+      })
+      .catch(errors => {
+        console.error(errors);
+        this.props.history.push("/error");
+      });
   };
 
   cancel = () => {

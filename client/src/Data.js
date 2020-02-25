@@ -65,6 +65,19 @@ export default class Data {
     );
 
     //TODO complete update course
+    if (response.status === 204) {
+      //If successful, return empty array (ie. no messages)
+      return [];
+    } else if (response.status === 401) {
+      //If 401, user is unauthorized
+      return null;
+    } else if (response.status === 400 || response.status === 403) {
+      //If 400 (general error) or 403 (user doesn't own course), return error message
+      return response.json().then(data => data.message);
+    } else {
+      //Anything else is a new error
+      throw new Error();
+    }
   }
 
   async getUser(username, password) {
