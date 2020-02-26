@@ -36,7 +36,11 @@ export default class CourseDetail extends Component {
                     <Link className="button" to={`/courses/${id}/update`}>
                       Update Course
                     </Link>
-                    <Link className="button" to="#">
+                    <Link
+                      className="button"
+                      to={`/courses/`}
+                      onClick={this.delete}
+                    >
                       Delete Course
                     </Link>
                   </span>
@@ -87,4 +91,21 @@ export default class CourseDetail extends Component {
       </div>
     );
   }
+
+  delete = () => {
+    const { context } = this.props;
+    const { authenticatedUser } = context;
+
+    const { id, errors } = this.state;
+
+    context.data
+      .deleteCourse(id, authenticatedUser.username, authenticatedUser.password)
+      .then(errors => {
+        if (errors.length) {
+          this.setState({ errors: errors });
+        } else {
+          this.props.history.push(`/`);
+        }
+      });
+  };
 }

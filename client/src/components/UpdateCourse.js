@@ -141,7 +141,6 @@ export default class UpdateCourse extends Component {
   };
 
   submit = () => {
-    // TODO complete submit
     const { context } = this.props;
     const {
       id,
@@ -167,7 +166,6 @@ export default class UpdateCourse extends Component {
     };
 
     const { authenticatedUser } = context;
-    console.log(authenticatedUser);
 
     context.data
       .updateCourse(
