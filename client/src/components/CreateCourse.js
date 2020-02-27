@@ -153,8 +153,13 @@ export default class CreateCourse extends Component {
         } else {
           context.actions
             .signIn(authenticatedUser.username, authenticatedUser.password)
-            .then(() => this.props.history.push(`/`));
+            .then(() => {
+              this.props.history.push(`/`);
+            });
         }
+      })
+      .catch(err => {
+        this.props.history.push("/error");
       });
   };
 
@@ -170,6 +175,6 @@ export default class CreateCourse extends Component {
   };
 
   cancel = () => {
-    this.props.history.push(`/courses/${this.state.id}`);
+    this.props.history.push(`/`);
   };
 }
