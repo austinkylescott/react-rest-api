@@ -1,0 +1,15 @@
+import React, { Component } from "react";
+
+export default class ErrorPage extends Component {
+  render() {
+    return (
+      <div>
+        <hr />
+        <div className="bounds">
+          <h1>Error</h1>
+          <p>Sorry! We just encountered an unexpected error.</p>
+        </div>
+      </div>
+    );
+  }
+}

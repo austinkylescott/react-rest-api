@@ -1,13 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import logo from "./logo.svg";
-
 import withContext from "./Context";
 import PrivateRoute from "./PrivateRoute";
 
 //Import Components
-
 import Header from "./components/Header";
 import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
@@ -16,6 +13,9 @@ import CreateCourse from "./components/CreateCourse";
 import UserSignIn from "./components/UserSignIn";
 import UserSignUp from "./components/UserSignUp";
 import UserSignOut from "./components/UserSignOut";
+import NotFound from "./components/NotFound";
+import UnhandledError from "./components/UnhandledError";
+import Forbidden from "./components/Forbidden";
 
 //Give components Context
 const HeaderWithContext = withContext(Header);
@@ -50,6 +50,9 @@ export default () => (
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
+        <Route path="/error" component={UnhandledError} />
+        <Route path="/forbidden" component={Forbidden} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   </Router>

@@ -68,10 +68,11 @@ export default class Data {
       return [];
     } else if (response.status === 401) {
       //If 401, user is unauthorized
+      this.props.history("/forbidden");
       return null;
     } else if (response.status === 400 || response.status === 403) {
       //If 400 (general error) or 403 (user doesn't own course), return error message
-      return response.json().then(data => data.message);
+      return response.json().then(data => data);
     } else {
       //Anything else is a new error
       throw new Error();
@@ -89,10 +90,11 @@ export default class Data {
       return [];
     } else if (response.status === 401) {
       //If 401, user is unauthorized
+      this.props.history("/forbidden");
       return null;
     } else if (response.status === 400) {
       //If 400 (general error)
-      return response.json().then(data => data.message);
+      return response.json().then(data => data);
     } else {
       //Anything else is a new error
       throw new Error();
@@ -113,10 +115,11 @@ export default class Data {
       return [];
     } else if (response.status === 401) {
       //If 401, user is not signed in
+      this.props.history("/forbidden");
       return null;
     } else if (response.status === 400 || response.status === 403) {
       //If 400 (general error) or 403 (user doesn't own course), return error message
-      return response.json().then(data => data.message);
+      return response.json().then(data => data);
     } else {
       //Anything else is a new error
       throw new Error();

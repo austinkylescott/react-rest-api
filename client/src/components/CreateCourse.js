@@ -35,7 +35,6 @@ export default class CreateCourse extends Component {
       description,
       estimatedTime,
       materialsNeeded,
-      userId,
       firstName,
       lastName,
       errors
@@ -126,8 +125,7 @@ export default class CreateCourse extends Component {
       description,
       estimatedTime,
       materialsNeeded,
-      userId,
-      errors
+      userId
     } = this.state;
 
     const course = {
@@ -139,7 +137,6 @@ export default class CreateCourse extends Component {
     };
 
     const { authenticatedUser } = context;
-
     context.data
       .createCourse(
         course,
@@ -147,18 +144,23 @@ export default class CreateCourse extends Component {
         authenticatedUser.password
       )
       .then(errors => {
-        if (errors) {
+        if (errors.error) {
           //If any errors were returned, update component error state
-          this.setState({ errors });
+          this.setState({ errors: errors.error });
         } else {
+          //Clear any pre-existing errors from previous attempt
+          this.setState({ errors: [] });
           context.actions
             .signIn(authenticatedUser.username, authenticatedUser.password)
             .then(() => {
               this.props.history.push(`/`);
+            })
+            .catch(err => {
+              this.props.history.push("/forbidden");
             });
         }
       })
-      .catch(err => {
+      .catch(errors => {
         this.props.history.push("/error");
       });
   };

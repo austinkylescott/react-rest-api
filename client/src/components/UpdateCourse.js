@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Form from "./Form";
 
 export default class UpdateCourse extends Component {
@@ -30,12 +29,11 @@ export default class UpdateCourse extends Component {
           userId: course.User.id
         });
       })
-      .catch(err => this.props.history.push("/error"));
+      .catch(err => this.props.history.push("/notfound"));
   }
 
   render() {
     const {
-      id,
       title,
       firstName,
       lastName,
@@ -150,8 +148,7 @@ export default class UpdateCourse extends Component {
       description,
       estimatedTime,
       materialsNeeded,
-      userId,
-      errors
+      userId
     } = this.state;
 
     const course = {
@@ -182,6 +179,9 @@ export default class UpdateCourse extends Component {
             .signIn(authenticatedUser.username, authenticatedUser.password)
             .then(() => {
               this.props.history.push(`/courses/${course.id}`);
+            })
+            .catch(err => {
+              this.props.history.push("/forbidden");
             });
         }
       })

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import Markdown from "react-markdown";
 export default class CourseDetail extends Component {
   state = {
     id: this.props.match.params.id,
@@ -16,11 +16,13 @@ export default class CourseDetail extends Component {
       .then(course => {
         this.setState({ course });
       })
-      .catch(err => this.props.history.push("/error"));
+      .catch(err => this.props.history.push("/notfound"));
   }
 
   render() {
-    const { id, course, errors } = this.state;
+    const { id, course } = this.state;
+    const { context } = this.props;
+    const { authenticatedUser } = context;
 
     return (
       <div>
@@ -32,18 +34,21 @@ export default class CourseDetail extends Component {
             <div className="actions--bar">
               <div className="bounds">
                 <div className="grid-100">
-                  <span>
-                    <Link className="button" to={`/courses/${id}/update`}>
-                      Update Course
-                    </Link>
-                    <Link
-                      className="button"
-                      to={`/courses/`}
-                      onClick={this.delete}
-                    >
-                      Delete Course
-                    </Link>
-                  </span>
+                  {authenticatedUser ? (
+                    <span>
+                      <Link className="button" to={`/courses/${id}/update`}>
+                        Update Course
+                      </Link>
+                      <Link
+                        className="button"
+                        to={`/courses/`}
+                        onClick={this.delete}
+                      >
+                        Delete Course
+                      </Link>
+                    </span>
+                  ) : null}
+
                   <Link className="button button-secondary" to="/">
                     Return to List
                   </Link>
@@ -58,7 +63,7 @@ export default class CourseDetail extends Component {
                   <p>{`By ${course.User.firstName} ${course.User.lastName}`}</p>
                 </div>
                 <div className="course--description">
-                  <p>{course.description}</p>
+                  <Markdown source={course.description} />
                 </div>
               </div>
               <div className="grid-25 grid-right">
@@ -77,9 +82,7 @@ export default class CourseDetail extends Component {
                       {course.materialsNeeded === null ? (
                         <h3>No required materials provided</h3>
                       ) : (
-                        <ul>
-                          <li>{course.materialsNeeded}</li>
-                        </ul>
+                        <Markdown source={course.materialsNeeded} />
                       )}
                     </li>
                   </ul>
@@ -96,16 +99,20 @@ export default class CourseDetail extends Component {
     const { context } = this.props;
     const { authenticatedUser } = context;
 
-    const { id, errors } = this.state;
+    const { id } = this.state;
 
     context.data
       .deleteCourse(id, authenticatedUser.username, authenticatedUser.password)
       .then(errors => {
         if (errors.length) {
-          this.setState({ errors: errors });
+          this.setState({ errors: errors.error });
         } else {
-          this.props.history.push(`/`);
+          //forces main page to reload
+          window.location.href = "/";
         }
+      })
+      .catch(errors => {
+        this.props.history.push("/error");
       });
   };
 }
