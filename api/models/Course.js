@@ -10,18 +10,18 @@ module.exports = sequelize => {
         primaryKey: true,
         autoIncrement: true
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: '"UserId" is required.'
-          },
-          notEmpty: {
-            msg: '"UserId" is required.'
-          }
-        }
-      },
+      // userId: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: false,
+      //   validate: {
+      //     notNull: {
+      //       msg: '"UserId" is required.'
+      //     },
+      //     notEmpty: {
+      //       msg: '"UserId" is required.'
+      //     }
+      //   }
+      // },
       title: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -58,7 +58,12 @@ module.exports = sequelize => {
 
   //Set up associations
   Course.associate = models => {
-    Course.belongsTo(models.User);
+    Course.belongsTo(models.User, {
+      foreignKey: {
+        fieldName: "userId",
+        allowNull: false
+      }
+    });
   };
 
   return Course;

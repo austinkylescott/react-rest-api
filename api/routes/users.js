@@ -84,7 +84,8 @@ router.get(
       .json({
         username: user.emailAddress,
         firstName: user.firstName,
-        lastName: user.lastName
+        lastName: user.lastName,
+        userId: user.id
       })
       .end();
   })
