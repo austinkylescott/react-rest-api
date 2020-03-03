@@ -113,7 +113,6 @@ router.post(
         "SequelizeUniqueConstraintError"
       ) {
         error.message = error.errors.map(error => error.message);
-        console.warn(error.message);
         res
           .status(400)
           .json(error.message)

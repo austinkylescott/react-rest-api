@@ -63,6 +63,7 @@ export default class Data {
       true,
       { username, password }
     );
+
     if (response.status === 204) {
       //If successful, return empty array (ie. no messages)
       return [];
@@ -72,7 +73,9 @@ export default class Data {
       return null;
     } else if (response.status === 400 || response.status === 403) {
       //If 400 (general error) or 403 (user doesn't own course), return error message
-      return response.json().then(data => data);
+      return response.json().then(data => {
+        return data.message;
+      });
     } else {
       //Anything else is a new error
       throw new Error();
@@ -142,11 +145,12 @@ export default class Data {
 
   async createUser(user) {
     const response = await this.api("/users", "POST", user);
+
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {
       return response.json().then(data => {
-        return data.errors;
+        return data;
       });
     } else {
       throw new Error();

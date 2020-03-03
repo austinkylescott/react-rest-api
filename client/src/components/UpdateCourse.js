@@ -172,8 +172,9 @@ export default class UpdateCourse extends Component {
       )
       .then(errors => {
         if (errors.length) {
+          console.warn(errors);
           //If any errors were returned, update component error state
-          this.setState({ errors });
+          this.setState({ errors: errors });
         } else {
           context.actions
             .signIn(authenticatedUser.username, authenticatedUser.password)

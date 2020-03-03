@@ -160,7 +160,7 @@ router.post(
         "SequelizeUniqueConstraintError"
       ) {
         error.message = error.errors.map(error => error.message);
-        console.warn(error.message);
+
         res
           .status(400)
           .json({ error: error.message })
@@ -182,29 +182,21 @@ router.put(
     if (course && course.userId == req.currentUser.id) {
       // Ensure ids match to confirm this is not a malformed request
       if (req.params.id == req.body.id) {
-        // Ensure both title and description have been provided
-        if (req.body.title && req.body.description) {
-          course
-            .update(req.body)
-            .then(() => {
-              res
-                .status(204)
-                .json(course)
-                .end();
-            })
-            .catch(error =>
-              res
-                .status(400)
-                .json({ message: error.message })
-                .end()
-            );
-        } else {
-          console.log("Both 'Title' and 'Description' are required.");
-          res
-            .status(400)
-            .json({ message: "Both 'Title' and 'Description' are required." })
-            .end();
-        }
+        course
+          .update(req.body)
+          .then(() => {
+            res
+              .status(204)
+              .json(course)
+              .end();
+          })
+          .catch(error => {
+            error.message = error.errors.map(error => error.message);
+            res
+              .status(400)
+              .json({ message: error.message })
+              .end();
+          });
       } else {
         console.log(
           "The supplied course ID does not match the course ID saved in database."
